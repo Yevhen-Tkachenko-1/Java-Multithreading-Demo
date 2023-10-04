@@ -11,6 +11,7 @@ Covered topics:
 - [**Thread vs Process**](#demo-1-thread-vs-process)
 - [**Executing Scheduling**](#demo-2-executing-scheduling)
 - [**Thread Lifecycle**](#demo-3-thread-lifecycle)
+- [**Data Race**](#demo-4-data-race)
 
 ### Multithreading bases
 
@@ -50,3 +51,14 @@ Covered topics:
    - `TIMED_WAITING` - A thread that is waiting for another thread to perform an action for up to a specified waiting time is in this state.
    - `TERMINATED` - A thread that has exited is in this state.
 
+### Concurrency
+
+#### Demo 4: Data Race
+
+1. Start [app](multithreading/src/main/java/com/yevhent/concurrency/DataRace.java)
+2. Check console output.<br>
+   There we have 2 same Threads that increase counter to add 10_000_000 in total.<br>
+   However, since these Threads use the same shared variable, calculation goes wrong way.<br>
+   Finally, we have some unexpected value like 11_149_076 instead of 20_000_000.
+
+  
