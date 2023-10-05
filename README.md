@@ -11,7 +11,8 @@ Covered topics:
 - [**Thread vs Process**](#demo-1-thread-vs-process)
 - [**Executing Scheduling**](#demo-2-executing-scheduling)
 - [**Thread Lifecycle**](#demo-3-thread-lifecycle)
-- [**Data Race**](#demo-4-data-race)
+- [**Data Race**](#demo-4-data-race-problem)
+- [**Mutual Exclusion**](#demo-5-mutual-exclusion---avoiding-data-race-problem)
 
 ### Multithreading bases
 
@@ -19,7 +20,7 @@ Covered topics:
 
 1. On the pc under Windows OS open Task Manager and switch to Performance tab.<br>
    On CPU pane you can see overall CPU utilization which is about 10% in regular state.
-2. Start [app](multithreading/src/main/java/com/yevhent/ThreadVsProcess.java) and see how CPU utilization is increased: can be up to 100%.
+2. Start [app](multithreading/src/main/java/com/yevhent/bases/ThreadVsProcess.java) and see how CPU utilization is increased: can be up to 100%.
 3. Get Process ID value from console output, e.g. 7428.<br>
    Now in Task Manager use Open Resource Monitor link to see more details.<br>
    In Resource Monitor window on CPU tab in Processes pane you can find our Java app by that Process ID.<br>
@@ -31,7 +32,7 @@ Covered topics:
 
 #### Demo 2: Executing Scheduling
 
-1. Start [app](multithreading/src/main/java/com/yevhent/ExecutingScheduling.java)
+1. Start [app](multithreading/src/main/java/com/yevhent/bases/ExecutingScheduling.java)
 2. Check console output:<br>
     There we have 11 rounds of execution.<br>
     Each time we start 2 Threads with the same order: Baron first, Olivia next.<br> 
@@ -41,7 +42,7 @@ Covered topics:
 
 #### Demo 3: Thread Lifecycle
 
-1. Start [app](multithreading/src/main/java/com/yevhent/ThreadLifecycle.java)
+1. Start [app](multithreading/src/main/java/com/yevhent/bases/ThreadLifecycle.java)
 2. Check console output.<br>
    There we have all possible states:
    - `NEW` - A thread that has not yet started is in this state.
@@ -53,12 +54,22 @@ Covered topics:
 
 ### Concurrency
 
-#### Demo 4: Data Race
+#### Demo 4: Data Race problem
 
-1. Start [app](multithreading/src/main/java/com/yevhent/concurrency/DataRace.java)
+1. Start [app](multithreading/src/main/java/com/yevhent/concurrency/datarace/DataRace.java)
 2. Check console output.<br>
-   There we have 2 same Threads that increase counter to add 10_000_000 in total.<br>
-   However, since these Threads use the same shared variable, calculation goes wrong way.<br>
+   There we have 2 same Threads that increase counter 10_000_000 times.<br>
+   However, since these Threads use the same shared data class, calculation goes wrong way.<br>
    Finally, we have some unexpected value like 11_149_076 instead of 20_000_000.
+
+#### Demo 5: Mutual Exclusion - avoiding Data Race problem
+
+1. Start [app](multithreading/src/main/java/com/yevhent/concurrency/datarace/MutualExclusion.java)
+2. Check console output.<br>
+   Now we have Thread safe shared data classes implemented based on:
+   - ReentrantLook
+   - Synchronized method
+   - Synchronized block
+   - Atomic variable
 
   

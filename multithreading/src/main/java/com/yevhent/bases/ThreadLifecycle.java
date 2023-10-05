@@ -1,7 +1,7 @@
-package com.yevhent;
+package com.yevhent.bases;
 
-import static com.yevhent.ThreadLifecycle.holdOn;
-import static com.yevhent.ThreadLifecycle.time;
+import static com.yevhent.bases.ThreadLifecycle.holdOn;
+import static com.yevhent.bases.ThreadLifecycle.time;
 
 public class ThreadLifecycle {
 
