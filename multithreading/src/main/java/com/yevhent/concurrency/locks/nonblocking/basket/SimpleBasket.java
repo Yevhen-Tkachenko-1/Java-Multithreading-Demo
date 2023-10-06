@@ -18,10 +18,7 @@ public class SimpleBasket implements Basket {
 
     @Override
     public void levelPotatoesAndPutOneCarrot() {
-        standInLine();
-        if (!isPotatoEnough) {
-            putOnePotato();
-        }
+        levelPotatoes();
         putOneCarrot();
     }
 
@@ -38,6 +35,13 @@ public class SimpleBasket implements Basket {
     @Override
     public int getCarrotTotal() {
         return carrotCount;
+    }
+
+    protected void levelPotatoes() {
+        standInLine();
+        if (!isPotatoEnough) {
+            putOnePotato();
+        }
     }
 
     protected void putOnePotato() {

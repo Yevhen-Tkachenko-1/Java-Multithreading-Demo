@@ -24,7 +24,7 @@ public class NestedAndNonBlockingLocks {
         goShopping(new BlockingReentrantBasket());
         System.out.println();
         System.out.println("Yevhen: That's better! We have right amount of potatoes now!");
-        System.out.println("        However,it took more time now :(");
+        System.out.println("        However, it took more time now :(");
         System.out.println("        Barron, you can ignore potatoes if there are a lot of people in the line.");
         System.out.println("        This time, let's have Non-Blocking Reentrant basket:");
         System.out.println();

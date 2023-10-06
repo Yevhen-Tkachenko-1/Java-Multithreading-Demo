@@ -32,6 +32,7 @@ public class ReadWriteLockDemo {
         passWeek(new ReadWriteCalendar());
         System.out.println();
         System.out.println("Yevhen: Great, now users see right day and they don't wait for each other!");
+        System.out.println("        So, we have better throughput!");
         System.out.println();
     }
 
