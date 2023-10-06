@@ -9,17 +9,17 @@ Implemented based on LinkedIn learning courses:
 
 Covered topics:
 
-#### Multithreading bases
+[**Multithreading bases**](#multithreading-bases)
 
-- [**Thread vs Process**](#demo-1-thread-vs-process)
-- [**Executing Scheduling**](#demo-2-executing-scheduling)
-- [**Thread Lifecycle**](#demo-3-thread-lifecycle)
+- **Thread vs Process**
+- **Executing Scheduling**
+- **Thread Lifecycle**
 
-#### Concurrency in Java
+[**Concurrency in Java**](#concurrency-in-java)
 
-- [**Mutual Exclusion: Data Race problem**](#demo-4-mutual-exclusion---resolving-data-race-problem)
-- [**Nested and Non-Blocking Locks**](#demo-5-nested-and-non-blocking-locks)
-- [**Read-Write Locks**](#demo-6-read-write-locks)
+- **Mutual Exclusion: Data Race problem**
+- **Nested and Non-Blocking Locks**
+- **Read-Write Locks**
 
 ### Multithreading bases
 
@@ -62,7 +62,7 @@ Covered topics:
       time is in this state.
     - `TERMINATED` - A thread that has exited is in this state.
 
-### Concurrency
+### Concurrency in Java
 
 #### Demo 4: Mutual Exclusion - resolving Data Race problem
 
