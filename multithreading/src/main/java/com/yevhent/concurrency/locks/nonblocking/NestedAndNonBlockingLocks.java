@@ -1,10 +1,11 @@
-package com.yevhent.concurrency.locks;
+package com.yevhent.concurrency.locks.nonblocking;
 
-import com.yevhent.concurrency.locks.basket.BlockingReentrantBasket;
-import com.yevhent.concurrency.locks.basket.NonBlockingReentrantBasket;
-import com.yevhent.concurrency.locks.basket.SimpleBasket;
+import com.yevhent.concurrency.locks.nonblocking.basket.Basket;
+import com.yevhent.concurrency.locks.nonblocking.basket.BlockingReentrantBasket;
+import com.yevhent.concurrency.locks.nonblocking.basket.NonBlockingReentrantBasket;
+import com.yevhent.concurrency.locks.nonblocking.basket.SimpleBasket;
 
-public class NestedBlockingNonBlockingLocks {
+public class NestedAndNonBlockingLocks {
 
     private static final int number = 15;
 

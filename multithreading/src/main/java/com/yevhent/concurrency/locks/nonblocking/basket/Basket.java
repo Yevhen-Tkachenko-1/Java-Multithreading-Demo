@@ -1,4 +1,4 @@
-package com.yevhent.concurrency.locks;
+package com.yevhent.concurrency.locks.nonblocking.basket;
 
 public interface Basket {
 

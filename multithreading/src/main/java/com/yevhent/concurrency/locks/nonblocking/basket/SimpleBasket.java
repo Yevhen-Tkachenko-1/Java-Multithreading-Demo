@@ -1,6 +1,4 @@
-package com.yevhent.concurrency.locks.basket;
-
-import com.yevhent.concurrency.locks.Basket;
+package com.yevhent.concurrency.locks.nonblocking.basket;
 
 public class SimpleBasket implements Basket {
 

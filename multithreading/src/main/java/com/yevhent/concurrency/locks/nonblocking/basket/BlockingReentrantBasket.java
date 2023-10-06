@@ -1,9 +1,9 @@
-package com.yevhent.concurrency.locks.basket;
+package com.yevhent.concurrency.locks.nonblocking.basket;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class NonBlockingReentrantBasket extends SimpleBasket {
+public class BlockingReentrantBasket extends SimpleBasket {
 
     private final Lock lock = new ReentrantLock();
 
@@ -22,15 +22,14 @@ public class NonBlockingReentrantBasket extends SimpleBasket {
 
     @Override
     public void levelPotatoesAndPutOneCarrot() {
-        if (lock.tryLock()) {
-            try {
-                standInLine();
-                if (!isPotatoEnough) {
-                    putOnePotato();
-                }
-            } finally {
-                lock.unlock();
+        try {
+            lock.lock();
+            standInLine();
+            if (!isPotatoEnough) {
+                putOnePotato();
             }
+        } finally {
+            lock.unlock();
         }
         putOneCarrot();
     }

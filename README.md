@@ -18,7 +18,8 @@ Covered topics:
 #### Concurrency in Java
 
 - [**Mutual Exclusion: Data Race problem**](#demo-4-mutual-exclusion---resolving-data-race-problem)
-- [**Nested, Blocking, Non-Blocking Locks**](#demo-5-nested-blocking-non-blocking-locks)
+- [**Nested and Non-Blocking Locks**](#demo-5-nested-and-non-blocking-locks)
+- [**Read-Write Locks**](#demo-6-read-write-locks)
 
 ### Multithreading bases
 
@@ -78,20 +79,33 @@ Covered topics:
     - Synchronized block
     - Atomic variable
 
-#### Demo 5: Nested, Blocking, Non-Blocking Locks
+#### Demo 5: Nested and Non-Blocking Locks
 
-1. Start [app](multithreading/src/main/java/com/yevhent/concurrency/locks/NestedBlockingNonBlockingLocks.java).
+1. Start [app](multithreading/src/main/java/com/yevhent/concurrency/locks/nonblocking/NestedAndNonBlockingLocks.java).
 2. Check console output.
-3. Review code in this [package](multithreading/src/main/java/com/yevhent/concurrency/locks).
+3. Review code in this [package](multithreading/src/main/java/com/yevhent/concurrency/locks/nonblocking).
 
 - **Nested Look Problem**: Using locks we can have situation when Thread blocks himself by acquiring same lock
   twice (without releasing after first lock).<br>
   In java we have Reentrant Lock by default which allows specific Thread to acquire same lock several times.<br>
   To release lock completely, Thread should unlock the same number of times as it was acquired.<br>
   ReentrantLock class allows you to see number of holds made by Thread.
-- **Blocking Look**: using locks solves problem of data race, but requires you to wait unit lock is released.
-- **Non-Blocking Look**: in case you don't need immediate result and have some other job to do you can use **lock try**.<br>
+- **Non-Blocking Look**: using locks solves problem of data race, but requires you to wait unit lock is released.<br>
+  In case you don't need immediate result and have some other job to do you can use **lock try**.<br>
   If lock is free you will take it, otherwise you will skip locked part and do alternative or just next job.
+
+#### Demo 6: Read-Write Locks
+
+1. Start [app](multithreading/src/main/java/com/yevhent/concurrency/locks/readwrite/ReadWriteLockDemo.java).
+2. Check console output.
+3. Review code in this [package](multithreading/src/main/java/com/yevhent/concurrency/locks/readwrite).
+
+- Let's imagine situation when only one Thread is changing variable and many Threads reading it.
+  With usual approach we lock both reading and writing access.
+  That works fine in terms of synchronization, but makes program slow.
+  Taking into account that most of the time Data is needed for reading only, we can soften the lock.
+  When Data is not blocked by changing, it accessible for reading without blocking, 
+  so can be accessible by many Threads at the same time.
 
 
   
