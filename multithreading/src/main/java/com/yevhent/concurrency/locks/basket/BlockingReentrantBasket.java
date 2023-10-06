@@ -3,17 +3,9 @@ package com.yevhent.concurrency.locks.basket;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class BlockingReentrantBasket<T extends Lock> extends SimpleBasket {
+public class BlockingReentrantBasket extends SimpleBasket {
 
-    private final T lock;
-
-    public BlockingReentrantBasket() {
-        this((T) new ReentrantLock());
-    }
-
-    public BlockingReentrantBasket(T lock) {
-        this.lock = lock;
-    }
+    private final Lock lock = new ReentrantLock();
 
     @Override
     public void putOneGarlicAndOnePotato() {
@@ -30,22 +22,18 @@ public class BlockingReentrantBasket<T extends Lock> extends SimpleBasket {
 
     @Override
     public void levelPotatoesAndPutOneCarrot() {
-        standInLine();
         try {
             lock.lock();
+            standInLine();
             if (!isPotatoEnough) {
                 putOnePotato();
             }
         } finally {
             lock.unlock();
         }
-
         putOneCarrot();
     }
 
-    /**
-     * Should be Thread safe. Is nested lock
-     */
     @Override
     protected void putOnePotato() {
         try {

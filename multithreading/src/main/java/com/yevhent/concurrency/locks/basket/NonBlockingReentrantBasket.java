@@ -22,22 +22,19 @@ public class NonBlockingReentrantBasket extends SimpleBasket {
 
     @Override
     public void levelPotatoesAndPutOneCarrot() {
-        standInLine();
-        try {
-            lock.lock();
-            if (!isPotatoEnough) {
-                putOnePotato();
+        if (lock.tryLock()) {
+            try {
+                standInLine();
+                if (!isPotatoEnough) {
+                    putOnePotato();
+                }
+            } finally {
+                lock.unlock();
             }
-        } finally {
-            lock.unlock();
         }
-
         putOneCarrot();
     }
 
-    /**
-     * Should be Thread safe. Is nested lock
-     */
     @Override
     protected void putOnePotato() {
         try {

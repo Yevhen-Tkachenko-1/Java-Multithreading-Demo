@@ -4,31 +4,32 @@ import com.yevhent.concurrency.locks.basket.BlockingReentrantBasket;
 import com.yevhent.concurrency.locks.basket.NonBlockingReentrantBasket;
 import com.yevhent.concurrency.locks.basket.SimpleBasket;
 
-public class JavaLocks {
+public class NestedBlockingNonBlockingLocks {
 
     private static final int number = 15;
 
     public static void main(String[] args) throws InterruptedException {
         System.out.println();
-        System.out.println("Hi guys!");
-        System.out.println("Olivia, please buy " + number + " potatoes and " + number + " garlic in total.");
-        System.out.println("Barron, please keep track of potatoes and buy " + number + " carrots.");
-        System.out.println("So, in total we should have \n" + number + " potatoes, \n" + number + " garlic, \n" + number + " carrots.");
+        System.out.println("Yevhen: Hi guys!");
+        System.out.println("        Olivia, please buy " + number + " potatoes and " + number + " garlic in total.");
+        System.out.println("        Barron, please keep track of potatoes and buy " + number + " carrots.");
+        System.out.println("        So, in total we should have " + number + " potatoes, " + number + " garlic, " + number + " carrots.");
         System.out.println();
         goShopping(new SimpleBasket());
         System.out.println();
-        System.out.println("Sorry guys, but we have more potatoes than needed!");
-        System.out.println("This time, let's have Blocking Reentrant basket:");
+        System.out.println("Yevhen: Sorry guys, but we have more potatoes than needed!");
+        System.out.println("        This time, let's have Blocking Reentrant basket:");
         System.out.println();
         goShopping(new BlockingReentrantBasket());
         System.out.println();
-        System.out.println("That's better! We have right amount of potatoes now!");
-//        System.out.println("But you shopping takes so much time :(");
-//        System.out.println("This time, let's have Non-Blocking Reentrant basket:");
-//        System.out.println();
-//        goShopping(new NonBlockingReentrantBasket());
-//        System.out.println();
-//        System.out.println("That's better! We have right amount of potatoes now!");
+        System.out.println("Yevhen: That's better! We have right amount of potatoes now!");
+        System.out.println("        However,it took more time now :(");
+        System.out.println("        Barron, you can ignore potatoes if there are a lot of people in the line.");
+        System.out.println("        This time, let's have Non-Blocking Reentrant basket:");
+        System.out.println();
+        goShopping(new NonBlockingReentrantBasket());
+        System.out.println();
+        System.out.println("Yevhen: Great job Barron! You've done it faster now!");
     }
 
     static void goShopping(Basket basket) throws InterruptedException {
@@ -38,9 +39,10 @@ public class JavaLocks {
         olivia.start();
         barron.join();
         olivia.join();
-        System.out.println("We bought " + basket.getPotatoTotal() + " potatoes.");
-        System.out.println("We bought " + basket.getGarlicTotal() + " garlic.");
-        System.out.println("We bought " + basket.getCarrotTotal() + " carrot.");
+        System.out.println("Barron and Olivia: We bought "
+                + basket.getPotatoTotal() + " potatoes, "
+                + basket.getGarlicTotal() + " garlic, "
+                + basket.getCarrotTotal() + " carrots.");
     }
 
     static class Barron extends Thread {
@@ -52,10 +54,12 @@ public class JavaLocks {
         }
 
         public void run() {
+            long start = System.currentTimeMillis();
             System.out.println("Barron: I'm going to check potatoes and add " + number + " carrots ...");
             for (int i = 0; i < number; i++) {
                 basket.levelPotatoesAndPutOneCarrot();
             }
+            System.out.println("Barron: I'm done, it took me " + (System.currentTimeMillis() - start));
         }
     }
 
