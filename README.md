@@ -79,7 +79,19 @@ Covered topics:
     - Synchronized block
     - Atomic variable
 
-#### Demo 5: Nested and Non-Blocking Locks
+#### Demo 5: Nested Locks
+
+1. Start [app](multithreading/src/main/java/com/yevhent/concurrency/locks/nested/NestedReentrantLockDemo.java).
+2. Check console output.
+3. Review code in this [package](multithreading/src/main/java/com/yevhent/concurrency/locks/nested).
+
+- **Nested Look Problem**: Using locks we can have situation when Thread blocks himself by acquiring same lock
+  twice (without releasing after first lock).
+  In java we have Reentrant Lock by default which allows specific Thread to acquire same lock several times.
+  To release lock completely, Thread should unlock the same number of times as it was acquired.
+  ReentrantLock class allows you to see number of holds made by Thread.
+
+#### Demo 6: Non-Blocking Locks
 
 1. Start [app](multithreading/src/main/java/com/yevhent/concurrency/locks/nonblocking/NestedAndNonBlockingLocks.java).
 2. Check console output.
@@ -94,7 +106,7 @@ Covered topics:
   In case you don't need immediate result and have some other job to do you can use **lock try**.<br>
   If lock is free you will take it, otherwise you will skip locked part and do alternative or just next job.
 
-#### Demo 6: Read-Write Locks
+#### Demo 7: Read-Write Locks
 
 1. Start [app](multithreading/src/main/java/com/yevhent/concurrency/locks/readwrite/ReadWriteLockDemo.java).
 2. Check console output.
