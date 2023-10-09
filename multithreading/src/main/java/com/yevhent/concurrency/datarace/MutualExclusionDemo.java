@@ -1,6 +1,6 @@
 package com.yevhent.concurrency.datarace;
 
-public class MutualExclusion {
+public class MutualExclusionDemo {
 
     public static void main(String[] args) throws InterruptedException {
         System.out.println();

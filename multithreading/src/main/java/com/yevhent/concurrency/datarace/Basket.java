@@ -16,7 +16,6 @@ interface Basket {
      */
     int getTotal();
 
-
     class SimpleBasket implements Basket {
 
         private int garlicCount = 0;
@@ -32,54 +31,33 @@ interface Basket {
         }
     }
 
-    class ReentrantBasket implements Basket {
+    class ReentrantBasket extends SimpleBasket {
 
         private final Lock lock = new ReentrantLock();
-
-        private int garlicCount = 0;
 
         @Override
         public void putOneGarlic() {
             lock.lock();
-            garlicCount++;
+            super.putOneGarlic();
             lock.unlock();
-        }
-
-        @Override
-        public int getTotal() {
-            return garlicCount;
         }
     }
 
-    class MethodSynchronizedBasket implements Basket {
-
-        private int garlicCount = 0;
+    class MethodSynchronizedBasket extends SimpleBasket {
 
         @Override
         public synchronized void putOneGarlic() {
-            garlicCount++;
-        }
-
-        @Override
-        public int getTotal() {
-            return garlicCount;
+            super.putOneGarlic();
         }
     }
 
-    class BlockSynchronizedBasket implements Basket {
-
-        private int garlicCount = 0;
+    class BlockSynchronizedBasket extends SimpleBasket {
 
         @Override
         public void putOneGarlic() {
             synchronized (this) {
-                garlicCount++;
+                super.putOneGarlic();
             }
-        }
-
-        @Override
-        public int getTotal() {
-            return garlicCount;
         }
     }
 
