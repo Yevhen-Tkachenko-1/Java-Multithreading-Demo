@@ -18,7 +18,7 @@ Covered topics:
 [**Concurrency in Java**](#concurrency-in-java)
 
 - **Mutual Exclusion: Data Race problem**
-- **Nested**
+- **Nested Locks**
 - **Non-Blocking Locks**
 - **Read-Write Locks**
 - **Dead Locks**
