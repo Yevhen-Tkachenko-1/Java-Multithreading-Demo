@@ -18,8 +18,10 @@ Covered topics:
 [**Concurrency in Java**](#concurrency-in-java)
 
 - **Mutual Exclusion: Data Race problem**
-- **Nested and Non-Blocking Locks**
+- **Nested**
+- **Non-Blocking Locks**
 - **Read-Write Locks**
+- **Dead Locks**
 
 ### Multithreading bases
 
@@ -114,5 +116,17 @@ Covered topics:
   When Data is not blocked by changing, it accessible for reading without blocking, 
   so can be accessible by many Threads at the same time.
 
+#### Demo 8: Dead Locks
 
+1. Start [app](multithreading/src/main/java/com/yevhent/concurrency/locks/deadlock/DeadLockDemo.java).
+2. Check console output.
+3. Review code in this [package](multithreading/src/main/java/com/yevhent/concurrency/locks/deadlock).
+
+- When several Threads use several shared Locks, it might be situation when Threads blocked by each other and stuck with no progress.
+- For example, we have Thread1 and Thread2 which both use Lock1 and Lock2. 
+  Dead Lock happens with next steps: Thread1 acquires Lock1 and Thread2 acquires Lock2. 
+  Then Thread1 tries to acquire Lock2 and becomes blocked as Lock2 already taken by Thread2.
+  Then the same happens with Thread2 which tries to acquire Lock1.
+- One of the solutions can be Locks Prioritizing. 
+  With this Thread1 and Thread2 should first try to acquire Lock1 and only then Lock2.
   
