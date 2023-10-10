@@ -66,7 +66,7 @@ Covered topics:
 
 #### Demo 4: Mutual Exclusion - resolving Data Race problem
 
-1. Start [app](multithreading/src/main/java/com/yevhent/concurrency/datarace/MutualExclusion.java)
+1. Start [app](multithreading/src/main/java/com/yevhent/concurrency/datarace/MutualExclusionDemo.java)
 2. Check console output.
 3. Review code in this [package](multithreading/src/main/java/com/yevhent/concurrency/datarace).
 
@@ -93,15 +93,10 @@ Covered topics:
 
 #### Demo 6: Non-Blocking Locks
 
-1. Start [app](multithreading/src/main/java/com/yevhent/concurrency/locks/nonblocking/NestedAndNonBlockingLocks.java).
+1. Start [app](multithreading/src/main/java/com/yevhent/concurrency/locks/nonblocking/NonBlockingLockDemo.java).
 2. Check console output.
 3. Review code in this [package](multithreading/src/main/java/com/yevhent/concurrency/locks/nonblocking).
 
-- **Nested Look Problem**: Using locks we can have situation when Thread blocks himself by acquiring same lock
-  twice (without releasing after first lock).<br>
-  In java we have Reentrant Lock by default which allows specific Thread to acquire same lock several times.<br>
-  To release lock completely, Thread should unlock the same number of times as it was acquired.<br>
-  ReentrantLock class allows you to see number of holds made by Thread.
 - **Non-Blocking Look**: using locks solves problem of data race, but requires you to wait unit lock is released.<br>
   In case you don't need immediate result and have some other job to do you can use **lock try**.<br>
   If lock is free you will take it, otherwise you will skip locked part and do alternative or just next job.
