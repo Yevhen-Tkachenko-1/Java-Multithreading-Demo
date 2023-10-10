@@ -1,9 +1,5 @@
 package com.yevhent.concurrency.locks.nested;
 
-import com.yevhent.concurrency.locks.nested.basket.Basket;
-import com.yevhent.concurrency.locks.nested.basket.NestedReentrantBasket;
-import com.yevhent.concurrency.locks.nested.basket.SimpleBasket;
-
 public class NestedReentrantLockDemo {
 
     private static final int number = 10_000_000;
@@ -15,12 +11,12 @@ public class NestedReentrantLockDemo {
         System.out.println("        Barron, please buy " + number + " potatoes.");
         System.out.println("        So, in total we should have " + number * 2 + " potatoes, " + number + " garlic.");
         System.out.println();
-        goShopping(new SimpleBasket());
+        goShopping(new Basket.SimpleBasket());
         System.out.println();
         System.out.println("Yevhen: Sorry guys, but we have more potatoes than needed!");
         System.out.println("        This time, let's have Blocking Reentrant basket:");
         System.out.println();
-        NestedReentrantBasket basket = new NestedReentrantBasket();
+        Basket.NestedReentrantBasket basket = new Basket.NestedReentrantBasket();
         goShopping(basket);
         System.out.println();
         System.out.println("Yevhen: Great! We have right amount of potatoes now!");
