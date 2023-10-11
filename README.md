@@ -125,10 +125,18 @@ Covered topics:
 
 - **Problem**: when several Threads use several shared Locks, it might be situation when Threads blocked by each other and stuck with
   no progress.
-- For example, we have Thread1 and Thread2 which both use Lock1 and Lock2.
-  Dead Lock happens with next steps: Thread1 acquires Lock1 and Thread2 acquires Lock2.
-  Then Thread1 tries to acquire Lock2 and becomes blocked as Lock2 already taken by Thread2.
-  Then the same happens with Thread2 which tries to acquire Lock1.
+
+For example, we have Thread1 and Thread2 which both use Lock1 and Lock2.
+Dead Lock happens with next steps: 
+1. Thread1 acquires Lock1. 
+2. Thread2 acquires Lock2.
+3. Thread1 tries to acquire Lock2 in blocking manner.
+4. Thread1 becomes blocked as Lock2 already taken by Thread2.
+5. Thread2 tries to acquire Lock1 in blocking manner.
+6. Thread2 becomes blocked as Lock1 already taken by Thread1.
+
+As a result, Thread1 and Thread2 got stuck waiting each other in blocked state. 
+
 - **Solution**: we can use Locks Prioritizing.
   With this Thread1 and Thread2 should first try to acquire Lock1 and only then Lock2.
 
@@ -140,7 +148,7 @@ Covered topics:
 
 - **Problem**: When several Threads use several shared Locks, it might be situation when Threads do some job, but with no actual progress.
 
-For example, we have Thread1 and Thread2 which both use Lock1 and Lock2.
+**For example**, we have Thread1 and Thread2 which both use Lock1 and Lock2.
 Live Lock happens with next steps:
 
 1. Thread1 acquires Lock1.
@@ -159,6 +167,9 @@ At the same time Thread2 does similar things:
 12. Thread2 releases Lock2.
 13. Thread2 does some other job.
 14. Thread2 returns to do the same: repeats steps 2, 9-14.
+
+**As a result**, it seems like Thread1 and Thread2 do something, but useful job is not accomplished.
+They doings are nothing more than just checking for Locks availability.
 
 - **Solution**: we can use access randomization.
   With this Thread1 and Thread2 will acquire Locks in different times so number of unsuccessful tries will be decreased.
