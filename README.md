@@ -22,6 +22,7 @@ Covered topics:
 - **Non-Blocking Locks**
 - **Read-Write Locks**
 - **Dead Locks**
+- **Live Locks**
 
 ### Multithreading bases
 
@@ -32,8 +33,8 @@ Covered topics:
 2. Start [app](multithreading/src/main/java/com/yevhent/bases/ThreadVsProcess.java) and see how CPU utilization is
    increased: can be up to 100%.
 3. Get Process ID value from console output, e.g. 7428.<br>
-   Now in Task Manager use Open Resource Monitor link to see more details.<br>
-   In Resource Monitor window on CPU tab in Processes pane you can find our Java app by that Process ID.<br>
+   Now in Task Manager use Open Resource Monitor link to see more details.
+   In Resource Monitor window on CPU tab in Processes pane you can find our Java app by that Process ID.
    There we can see number of Threads and CPU utilization in percents.
    Number of Threads is usually greater than created by our program.
    Others background Threads are created for util functions like garbage collection and runtime compilations.
@@ -45,9 +46,9 @@ Covered topics:
 1. Start [app](multithreading/src/main/java/com/yevhent/bases/ExecutingScheduling.java)
 2. Check console output.
 3. There we have 11 rounds of execution.<br>
-   Each time we start 2 Threads with the same order: Baron first, Olivia next.<br>
-   By this, it is expected that Baron wins each time by chopping more vegetables as it goes first.<br>
-   However, actual results is unpredictable and depends on Threads scheduling by system.<br>
+   Each time we start 2 Threads with the same order: Baron first, Olivia next.
+   By this, it is expected that Baron wins each time by chopping more vegetables as it goes first.
+   However, actual results is unpredictable and depends on Threads scheduling by system.
    For example, I have 7 times when Baron chopped more vegetables, and Olivia wins 4 times.
 
 #### Demo 3: Thread Lifecycle
@@ -72,9 +73,9 @@ Covered topics:
 2. Check console output.
 3. Review code in this [package](multithreading/src/main/java/com/yevhent/concurrency/datarace).
 
-- **Problem**: There we have 2 same Threads that increase counter 10_000_000 times.<br>
-   However, since these Threads use the same shared data class, calculation goes wrong way.<br>
-   Finally, we have some unexpected value like 11_149_076 instead of 20_000_000.
+- **Problem**: There we have 2 same Threads that increase counter 10_000_000 times.
+  However, since these Threads use the same shared data class, calculation goes wrong way.
+  Finally, we have some unexpected value like 11_149_076 instead of 20_000_000.
 - **Solution**: We have Thread safe shared data classes implemented based on:
     - ReentrantLook
     - Synchronized method
@@ -99,8 +100,8 @@ Covered topics:
 2. Check console output.
 3. Review code in this [package](multithreading/src/main/java/com/yevhent/concurrency/locks/nonblocking).
 
-- **Non-Blocking Look**: using locks solves problem of data race, but requires you to wait unit lock is released.<br>
-  In case you don't need immediate result and have some other job to do you can use **lock try**.<br>
+- **Non-Blocking Look**: using locks solves problem of data race, but requires you to wait unit lock is released.
+  In case you don't need immediate result and have some other job to do you can use **lock try**.
   If lock is free you will take it, otherwise you will skip locked part and do alternative or just next job.
 
 #### Demo 7: Read-Write Locks
@@ -113,7 +114,7 @@ Covered topics:
   With usual approach we lock both reading and writing access.
   That works fine in terms of synchronization, but makes program slow.
   Taking into account that most of the time Data is needed for reading only, we can soften the lock.
-  When Data is not blocked by changing, it accessible for reading without blocking, 
+  When Data is not blocked by changing, it accessible for reading without blocking,
   so can be accessible by many Threads at the same time.
 
 #### Demo 8: Dead Locks
@@ -122,11 +123,42 @@ Covered topics:
 2. Check console output.
 3. Review code in this [package](multithreading/src/main/java/com/yevhent/concurrency/locks/deadlock).
 
-- When several Threads use several shared Locks, it might be situation when Threads blocked by each other and stuck with no progress.
-- For example, we have Thread1 and Thread2 which both use Lock1 and Lock2. 
-  Dead Lock happens with next steps: Thread1 acquires Lock1 and Thread2 acquires Lock2. 
+- **Problem**: when several Threads use several shared Locks, it might be situation when Threads blocked by each other and stuck with
+  no progress.
+- For example, we have Thread1 and Thread2 which both use Lock1 and Lock2.
+  Dead Lock happens with next steps: Thread1 acquires Lock1 and Thread2 acquires Lock2.
   Then Thread1 tries to acquire Lock2 and becomes blocked as Lock2 already taken by Thread2.
   Then the same happens with Thread2 which tries to acquire Lock1.
-- One of the solutions can be Locks Prioritizing. 
+- **Solution**: we can use Locks Prioritizing.
   With this Thread1 and Thread2 should first try to acquire Lock1 and only then Lock2.
-  
+
+#### Demo 9: Live Locks
+
+1. Start [app](multithreading/src/main/java/com/yevhent/concurrency/locks/livelock/LiveLockDemo.java).
+2. Check console output.
+3. Review code in this [package](multithreading/src/main/java/com/yevhent/concurrency/locks/livelock).
+
+- **Problem**: When several Threads use several shared Locks, it might be situation when Threads do some job, but with no actual progress.
+
+For example, we have Thread1 and Thread2 which both use Lock1 and Lock2.
+Live Lock happens with next steps:
+
+1. Thread1 acquires Lock1.
+2. Thread2 acquires Lock2.<br>
+Then Thread1 does next:
+3. Thread1 tries to acquire Lock2 in non-blocking manner.
+4. Thread1 has no lock acquired as Lock2 already taken by Thread2.
+5. Thread1 is not blocked so can try to do something else.
+6. Thread1 releases Lock1.
+7. Thread1 does some other job.
+8. Thread1 returns to do the same: repeats steps 1, 3-6.<br>
+At the same time Thread2 does similar things:
+9. Thread2 tries to acquire Lock1 in non-blocking manner.
+10. Thread2 has no lock acquired as Lock1 already taken by Thread1.
+11. Thread2 is not blocked so can try to do something else.
+12. Thread2 releases Lock2.
+13. Thread2 does some other job.
+14. Thread2 returns to do the same: repeats steps 2, 9-14.
+
+- **Solution**: we can use access randomization.
+  With this Thread1 and Thread2 will acquire Locks in different times so number of unsuccessful tries will be decreased.
