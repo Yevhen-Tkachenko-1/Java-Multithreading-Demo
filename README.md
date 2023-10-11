@@ -18,11 +18,11 @@ Covered topics:
 [**Concurrency in Java**](#concurrency-in-java)
 
 - **Mutual Exclusion: Data Race problem**
-- **Nested Locks**
-- **Non-Blocking Locks**
-- **Read-Write Locks**
-- **Dead Locks**
-- **Live Locks**
+- **Nested Lock**
+- **Non-Blocking Lock**
+- **Read-Write Lock**
+- **Shared Transaction: Deadlock problem**
+- **Shared Transaction: Livelock problem**
 
 ### Multithreading bases
 
@@ -82,7 +82,7 @@ Covered topics:
     - Synchronized block
     - Atomic variable
 
-#### Demo 5: Nested Locks
+#### Demo 5: Nested Lock
 
 1. Start [app](multithreading/src/main/java/com/yevhent/concurrency/locks/nested/NestedReentrantLockDemo.java).
 2. Check console output.
@@ -94,7 +94,7 @@ Covered topics:
   To release lock completely, Thread should unlock the same number of times as it was acquired.
   ReentrantLock class allows you to see number of holds made by Thread.
 
-#### Demo 6: Non-Blocking Locks
+#### Demo 6: Non-Blocking Lock
 
 1. Start [app](multithreading/src/main/java/com/yevhent/concurrency/locks/nonblocking/NonBlockingLockDemo.java).
 2. Check console output.
@@ -104,7 +104,7 @@ Covered topics:
   In case you don't need immediate result and have some other job to do you can use **lock try**.
   If lock is free you will take it, otherwise you will skip locked part and do alternative or just next job.
 
-#### Demo 7: Read-Write Locks
+#### Demo 7: Read-Write Lock
 
 1. Start [app](multithreading/src/main/java/com/yevhent/concurrency/locks/readwrite/ReadWriteLockDemo.java).
 2. Check console output.
@@ -117,7 +117,7 @@ Covered topics:
   When Data is not blocked by changing, it accessible for reading without blocking,
   so can be accessible by many Threads at the same time.
 
-#### Demo 8: Dead Locks
+#### Demo 8: Shared Transaction: Dead Lock problem
 
 1. Start [app](multithreading/src/main/java/com/yevhent/concurrency/locks/deadlock/DeadLockDemo.java).
 2. Check console output.
@@ -140,7 +140,7 @@ As a result, Thread1 and Thread2 got stuck waiting each other in blocked state.
 - **Solution**: we can use Locks Prioritizing.
   With this Thread1 and Thread2 should first try to acquire Lock1 and only then Lock2.
 
-#### Demo 9: Live Locks
+#### Demo 9: Shared Transaction: Live Lock problem
 
 1. Start [app](multithreading/src/main/java/com/yevhent/concurrency/locks/livelock/LiveLockDemo.java).
 2. Check console output.
