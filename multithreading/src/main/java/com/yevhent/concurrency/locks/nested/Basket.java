@@ -24,7 +24,7 @@ public interface Basket {
      */
     int getPotatoTotal();
 
-    public class SimpleBasket implements Basket {
+    class SimpleBasket implements Basket {
 
         protected int garlicCount = 0;
         protected int potatoCount = 0;

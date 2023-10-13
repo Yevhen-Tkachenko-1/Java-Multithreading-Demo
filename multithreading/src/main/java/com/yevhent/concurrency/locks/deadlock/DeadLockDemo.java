@@ -11,7 +11,7 @@ public class DeadLockDemo {
         System.out.println("        For you 3 people we have only 3 chopsticks. This seems to be enough for eating with some pauses.");
         System.out.println("        Let's have a dinner!");
         System.out.println();
-        List<Philosopher> philosophers = eatSushi(new ChopsticksContainer.CircularChopsticks());
+        List<Philosopher> philosophers = eatSushi(ChopsticksPair.getCircular());
         Thread.sleep(2_000);
         long start = System.currentTimeMillis();
         System.out.println();
@@ -30,7 +30,7 @@ public class DeadLockDemo {
         System.out.println("Yevhen: Unfortunately, you didn't manage to use 3 Chopsticks together,");
         System.out.println("        Let's have one more dinner with another rules!");
         System.out.println();
-        eatSushi(new ChopsticksContainer.PrioritizedChopsticks());
+        eatSushi(ChopsticksPair.getPrioritized());
         Thread.sleep(2_000);
         System.out.println();
         System.out.println("Yevhen: Great! Happy to know that.");
@@ -39,9 +39,8 @@ public class DeadLockDemo {
 
     static int sushiCount;
 
-    static List<Philosopher> eatSushi(ChopsticksContainer container) {
+    static List<Philosopher> eatSushi(List<ChopsticksPair> pairs) {
         sushiCount = 100;
-        List<ChopsticksPair> pairs = container.getPairs();
         Philosopher barron = new Philosopher("Barron", pairs.get(0));
         Philosopher olivia = new Philosopher("Olivia", pairs.get(1));
         Philosopher steve = new Philosopher("Steve", pairs.get(2));

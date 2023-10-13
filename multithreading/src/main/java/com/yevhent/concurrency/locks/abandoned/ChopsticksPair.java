@@ -1,4 +1,4 @@
-package com.yevhent.concurrency.locks.livelock;
+package com.yevhent.concurrency.locks.abandoned;
 
 import java.util.List;
 import java.util.concurrent.locks.Lock;
@@ -16,14 +16,16 @@ public class ChopsticksPair {
         this.second = second;
     }
 
-    public boolean take() throws InterruptedException {
-        first.lockInterruptibly();
-        processing();
-        if (second.tryLock()) {
-            return true;
+    public boolean take() {
+        if (first.tryLock()) {
+            processing();
+            if (second.tryLock()) {
+                return true;
+            } else {
+                first.unlock();
+            }
+            processing();
         }
-        processing();
-        first.unlock();
         return false;
     }
 
@@ -49,13 +51,12 @@ public class ChopsticksPair {
         return String.format("ChopsticksPair: [%d,%d]", first, second);
     }
 
-    public static List<ChopsticksPair> getCircular() {
-
+    public static List<ChopsticksPair> getPrioritized() {
         List<Lock> allChopsticks = getAllChopsticks();
         return List.of(
                 new ChopsticksPair(ChopsticksPair.toString(0, 1), allChopsticks.get(0), allChopsticks.get(1)),
                 new ChopsticksPair(ChopsticksPair.toString(1, 2), allChopsticks.get(1), allChopsticks.get(2)),
-                new ChopsticksPair(ChopsticksPair.toString(2, 0), allChopsticks.get(2), allChopsticks.get(0))
+                new ChopsticksPair(ChopsticksPair.toString(0, 2), allChopsticks.get(0), allChopsticks.get(2))
         );
     }
 

@@ -21,8 +21,9 @@ Covered topics:
 - **Nested Lock**
 - **Non-Blocking Lock**
 - **Read-Write Lock**
-- **Shared Transaction: Deadlock problem**
-- **Shared Transaction: Livelock problem**
+- **Multiple Locks: Deadlock problem**
+- **Multiple Locks: Livelock problem**
+- **Exception Handling: Abandoned Lock problem**
 
 ### Multithreading bases
 
@@ -117,7 +118,7 @@ Covered topics:
   When Data is not blocked by changing, it accessible for reading without blocking,
   so can be accessible by many Threads at the same time.
 
-#### Demo 8: Shared Transaction: Dead Lock problem
+#### Demo 8: Multiple Locks: Deadlock problem
 
 1. Start [app](multithreading/src/main/java/com/yevhent/concurrency/locks/deadlock/DeadLockDemo.java).
 2. Check console output.
@@ -140,7 +141,7 @@ As a result, Thread1 and Thread2 got stuck waiting each other in blocked state.
 - **Solution**: we can use Locks Prioritizing.
   With this Thread1 and Thread2 should first try to acquire Lock1 and only then Lock2.
 
-#### Demo 9: Shared Transaction: Live Lock problem
+#### Demo 9: Multiple Locks: Livelock problem
 
 1. Start [app](multithreading/src/main/java/com/yevhent/concurrency/locks/livelock/LiveLockDemo.java).
 2. Check console output.
@@ -173,3 +174,17 @@ They doings are nothing more than just checking for Locks availability.
 
 - **Solution**: we can use access randomization.
   With this Thread1 and Thread2 will acquire Locks in different times so number of unsuccessful tries will be decreased.
+
+#### Demo 10: Exception Handling: Abandoned Lock problem
+
+1. Start [app](multithreading/src/main/java/com/yevhent/concurrency/locks/abandoned/AbandonedLockDemo.java).
+2. Check console output.
+3. Review code in this [package](multithreading/src/main/java/com/yevhent/concurrency/locks/abandoned).
+
+- **Problem**: it's possible that Thread has some Exception thrown in runtime and going to finish its execution.
+  In case such Thread managed to acquire Lock and ends without Lock releasing, 
+  other threads will not be able to acquire this Lock at any time in the future.
+
+- **Solution**: always surround critical section in try-catch-finally block. 
+  In try section we acquire Lock and do work needed, and in finally block we release Lock,
+  so that Lock will be released in any case: success or fail. 
