@@ -24,6 +24,7 @@ Covered topics:
 - **Multiple Locks: Deadlock problem**
 - **Multiple Locks: Livelock problem**
 - **Exception Handling: Abandoned Lock problem**
+- **Load Balancing: Starved Thread problem**
 
 ### Multithreading bases
 
@@ -188,3 +189,15 @@ They doings are nothing more than just checking for Locks availability.
 - **Solution**: always surround critical section in try-catch-finally block. 
   In try section we acquire Lock and do work needed, and in finally block we release Lock,
   so that Lock will be released in any case: success or fail. 
+
+#### Demo 11: Load Balancing: Starved Thread problem
+
+1. Start [app](multithreading/src/main/java/com/yevhent/concurrency/locks/starved/StarvedLockDemo.java).
+2. Check console output.
+3. Review code in this [package](multithreading/src/main/java/com/yevhent/concurrency/locks/starved).
+
+- **Problem**: by default, load is not spread in equal way to all Threads even when they do the same job and are started one by one.
+  This becomes a problem if, for example, Thread processes request asked by end User.
+  Once we have many Users, some Users will have request processed immediately, and others will wait long time.
+
+- **Solution**: depends on actual problem, not in scope of this demo.
